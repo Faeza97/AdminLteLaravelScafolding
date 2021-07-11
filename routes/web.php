@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['namespace' => 'Auth'], function() {
+    Route::get('/login', 'Login\SignInController@showForm')->name('login');
+    Route::post('/authenticate', 'Login\SignInController@authenticateUser')->name('signin');
+
+    Route::get('/logout', 'Logout\LogoutController@logout')->name('logout');
+
+    Route::get('/signup', 'SignUp\SignUpController@showForm')->name('signup');
+    Route::post('/register', 'SignUp\SignUpController@register')->name('register');
+
+    Route::get('/forgot-password', 'ForgotPassword\ForgotPasswordController@showForm')->name('forgot-password');
+    Route::get('/recover-password', 'ForgotPassword\ForgotPasswordController@showRecoverForm')->name('recover-password');
+    Route::post('/reset-password', 'ForgotPassword\ForgotPasswordController@resetPassword')->name('reset-password');
+});
+
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 
 });
