@@ -33,3 +33,8 @@ Route::group(['namespace' => 'Auth'], function() {
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 
 });
+
+
+Route::group(['prefix' => 'payment-gateway'], function() {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 
+});
